@@ -4,7 +4,7 @@ using System.Text.Json.Nodes;
 
 namespace CarsConsulting.DAL.Models
 {
-    public class Car : EntityBase
+    public class Car : BaseEntity
     {
         
         public string Model { get; set; }        
@@ -17,10 +17,16 @@ namespace CarsConsulting.DAL.Models
 
         public TransmissionType TransmissionType { get; set; }
 
+        public byte[]? Image { get; set; }
+
+        public string Year { get; set; }
+
         public Car()
         {
             Model = string.Empty;
             Maker = new Maker();
+            Image = Array.Empty<byte>();
+            Year = string.Empty;
         }
     }
 }

@@ -5,11 +5,11 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
   env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:37617';
 
 const context =  [
-  "/weatherforecast",
+  "/Car",
 ];
 
 module.exports = function(app) {
-  const appProxy = createProxyMiddleware(context, {
+  const appProxy = createProxyMiddleware("/Api" + context, {
     target: target,
     secure: false,
     headers: {

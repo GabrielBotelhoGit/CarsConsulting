@@ -2,7 +2,7 @@
 
 namespace CarsConsulting.DAL.Models
 {
-    public class Maker : EntityBase
+    public class Maker : BaseEntity
     {
         [Required]
         public string Name { get; set; }

@@ -2,7 +2,7 @@
 
 namespace CarsConsulting.DAL.Models
 {
-    public class EntityBase
+    public class BaseEntity
     {
         [Key]
         public Guid Id { get; set; }
@@ -11,7 +11,7 @@ namespace CarsConsulting.DAL.Models
         [Required]
         public DateTime UpdatedAt { get; set; }
 
-        public EntityBase()
+        public BaseEntity()
         {
             Id = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;

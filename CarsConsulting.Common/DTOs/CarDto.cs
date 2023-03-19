@@ -13,5 +13,9 @@ namespace CarsConsulting.DTOs
         public CylinderNumber CylinderNumber { get; set; }
 
         public TransmissionType TransmissionType { get; set; }
+
+        public byte[]? Image { get; set; }
+
+        public string? Year { get; set; }
     }
 }
