@@ -52,7 +52,7 @@ namespace CarsConsulting.Controllers
             return Ok(true);
         }
 
-        [HttpPut("{id}")]
+        [HttpDelete("{id}")]
         [Produces(typeof(bool))]
         [SwaggerOperation("Delete a car")]
         public async Task<ActionResult> DeleteAsync([FromRoute] Guid id)

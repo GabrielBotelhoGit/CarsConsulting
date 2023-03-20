@@ -7,9 +7,10 @@ namespace CarsConsulting.DAL.Models
     public class Car : BaseEntity
     {
         
-        public string Model { get; set; }        
+        public string Model { get; set; }
 
-        public Maker Maker { get; set; }
+        [Required]
+        public Maker? Maker { get; set; }
         
         public FuelType DriveType { get; set; }
 
@@ -24,7 +25,6 @@ namespace CarsConsulting.DAL.Models
         public Car()
         {
             Model = string.Empty;
-            Maker = new Maker();
             Image = Array.Empty<byte>();
             Year = string.Empty;
         }

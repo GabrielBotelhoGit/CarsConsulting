@@ -5,6 +5,7 @@ using CarsConsulting.DAL.Models;
 using CarsConsulting.DTOs;
 using CarsConsulting.Enums;
 using CarsConsulting.Repositories;
+using System.Globalization;
 
 namespace CarsConsulting.Services
 {
@@ -46,10 +47,11 @@ namespace CarsConsulting.Services
             var car = _mapper.Map<Car>(carDto);
             Maker? maker = await _makerService.GetMakerByNameAsync(carDto.Maker).ConfigureAwait(false);
 
-            if (maker != null) { 
-                car.Maker = maker;
+            if (maker != null && car.Maker!.Id != maker.Id)
+            {
+                maker.Cars.Add(car);
             }
-            else
+            else if (maker == null)
             {
                 car.Maker = await _makerService.CreateMakerAsync(carDto.Maker).ConfigureAwait(false);
             }
@@ -78,17 +80,18 @@ namespace CarsConsulting.Services
         public CarEnumsDto GetEnumValues()
         {
             CarEnumsDto carEnumsDto = new();
+            TextInfo info = CultureInfo.CurrentCulture.TextInfo;
             carEnumsDto.CylinderNumbers = Enum.GetValues(typeof(CylinderNumber))
                .Cast<CylinderNumber>()
-               .ToDictionary(t => (int)t, t => t.ToString());
+               .ToDictionary(t => (int)t, t => info.ToTitleCase(t.ToString()).Replace(" ", string.Empty));
 
             carEnumsDto.FuelTypes = Enum.GetValues(typeof(FuelType))
                .Cast<FuelType>()
-               .ToDictionary(t => (int)t, t => t.ToString());
+               .ToDictionary(t => (int)t, t => info.ToTitleCase(t.ToString()).Replace(" ", string.Empty));
 
             carEnumsDto.TransmissionTypes = Enum.GetValues(typeof(TransmissionType))
                .Cast<TransmissionType>()
-               .ToDictionary(t => (int)t, t => t.ToString());
+               .ToDictionary(t => (int)t, t => info.ToTitleCase(t.ToString()).Replace(" ", string.Empty));
 
             return carEnumsDto;
         }
@@ -97,11 +100,11 @@ namespace CarsConsulting.Services
         {
             Maker? maker = await _makerService.GetMakerByNameAsync(carDto.Maker).ConfigureAwait(false);
 
-            if (maker != null)
+            if (maker != null && car.Maker!.Id != maker.Id)
             {
-                car.Maker = maker;
+                maker.Cars.Add(car);
             }
-            else
+            else if (maker == null)
             {
                 car.Maker = await _makerService.CreateMakerAsync(carDto.Maker).ConfigureAwait(false);
             }

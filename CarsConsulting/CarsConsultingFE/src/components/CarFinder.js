@@ -1,9 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import CarBox from './CarBox';
-import { getAllCars, getCarEnums } from '../services/CarsConsultingApiService';
+﻿import React, { useState, useEffect, useCallback } from 'react';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCar, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { confirmAlert } from 'react-confirm-alert';
+import { getByBrandAndYear } from '../services/CarApiHelperService';
+import { createCar } from '../services/CarsConsultingApiService';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Blocks } from 'react-loader-spinner'
 
-const Home = () => {
+library.add(faCar, faXmark);
+
+const CarFinder = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [carsData, setCarsData] = useState();
   const [carsEnumOptions, setCarsEnumOptions] = useState();
@@ -11,25 +18,31 @@ const Home = () => {
   const reloadCars = useCallback(() => {
     setLoadingData(true);
     setTimeout(() => {
-      Promise.all([getAllCars(), getCarEnums()])
+      /*Promise.all([getAllCars(), getCarEnums()])
         .then((results) => {
           setCarsData(results[0].data);
           setCarsEnumOptions(results[1].data);
           setLoadingData(false);
-        })
-    }, 2000)    
+        })*/
+
+      getByBrandAndYear("Hyundai", 2019)
+        .then((resolve) => {
+          var teste = resolve.data;
+        });
+
+    }, 2000)
   }, []);
 
   useEffect(() => {
     if (!carsData) {
       reloadCars();
-    }    
+    }
   });
 
   return (
     <div>
       <div className="TitleHomePage">
-        <h2>Saved Cars</h2>
+        <h2>Find a car</h2>
       </div>
       <div className="CarContainer">
         {loadingData ?
@@ -43,15 +56,16 @@ const Home = () => {
           />
           : (
             carsData.length > 0 && carsEnumOptions ?
-            carsData.map(car => {
-              return <CarBox car={car} key={car.id} carEnumOptions={carsEnumOptions} reloadCars={reloadCars} />
-            })
+              /*carsData.map(car => {
+                return <CarBox car={car} key={car.id} carEnumOptions={carsEnumOptions} reloadCars={reloadCars} />
+              })*/
+              <p>teste</p>
               : <p>You still dont have any cars saved</p>
-            )
+          )
         }
       </div>
     </div>
   );
 }
 
-export default Home;
+export default CarFinder;

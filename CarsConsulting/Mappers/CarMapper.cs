@@ -9,8 +9,8 @@ namespace CarsConsulting.Mappers
         public CarMapper()
         {
             CreateMap<Car, CarDto>()
-                .ForMember(d => d.Maker, opt => opt.MapFrom(src => src.Maker.Name))
-                .ReverseMap();
+                .ForMember(d => d.Maker, opt => opt.MapFrom(src => src.Maker!.Name));
+            CreateMap<CarDto, Car>();
         }
     }
 }
