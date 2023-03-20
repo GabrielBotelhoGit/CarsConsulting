@@ -7,7 +7,7 @@ namespace CarsConsulting.Repositories
     public abstract class BaseRepository<T, Y> :IBaseRepository<T> where Y : DbContext where T : BaseEntity
     {
         private readonly Y _dbContext;
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
 
         protected BaseRepository(Y dbContext)
         {
@@ -38,6 +38,8 @@ namespace CarsConsulting.Repositories
 
         public async Task AddAsync(T entity)
         {
+            entity.CreatedAt = DateTime.UtcNow;
+            entity.UpdatedAt = DateTime.UtcNow;
             await _dbSet
                 .AddAsync(entity);
 
@@ -47,6 +49,7 @@ namespace CarsConsulting.Repositories
 
         public async Task UpdateAsync(T entity)
         {
+            entity.UpdatedAt = DateTime.UtcNow;
             _dbSet.Update(entity);
 
             await _dbContext.

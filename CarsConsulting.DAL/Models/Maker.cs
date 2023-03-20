@@ -13,6 +13,13 @@ namespace CarsConsulting.DAL.Models
             Name = String.Empty;
             Cars = new();
         }
+
+        public Maker(string name)
+        {
+            Name = name;
+            Cars = new();
+        }
+
         public Maker(string name, List<Car> cars)
         {
             Name = name;

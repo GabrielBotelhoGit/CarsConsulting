@@ -3,5 +3,7 @@
 namespace CarsConsulting.Repositories
 {
     public interface ICarRepository : IBaseRepository<Car>
-    { }
+    {
+        public Task<List<Car>> GetAllWithMakerAsync();
+    }
 }

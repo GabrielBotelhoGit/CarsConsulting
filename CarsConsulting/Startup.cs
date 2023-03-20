@@ -1,7 +1,5 @@
 ﻿using CarsConsulting.DAL;
-using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarsConsulting

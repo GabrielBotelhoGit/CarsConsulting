@@ -1,0 +1,14 @@
+{
+  "version": "2.0",
+  "tracing": {
+    "consoleLevel": "verbose"
+  },
+  "logging": {
+      "applicationInsights": {
+          "samplingSettings": {
+              "isEnabled": true,
+              "excludedTypes": "Request"
+          }
+      }
+  }
+}
