@@ -8,7 +8,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 library.add(faCar, faXmark);
 
-const CarBox = ({ car, carEnumOptions, reloadCars }) => {
+const CarBox = ({ car, reloadCars }) => {
   let onDelete = (id) => {
     confirmAlert({
       title: 'Confirm to delete',                        
@@ -63,7 +63,7 @@ const CarBox = ({ car, carEnumOptions, reloadCars }) => {
           Transmission:
         </span>
         <span>
-          {carEnumOptions["transmissionTypes"][car.transmissionType]}
+          {car.transmissionType}
         </span>
       </div>
       <div className="infoLine">
@@ -71,7 +71,7 @@ const CarBox = ({ car, carEnumOptions, reloadCars }) => {
           Number of cylinders:
         </span>
         <span>
-          {carEnumOptions["cylinderNumbers"][car.cylinderNumber]}
+          {car.cylinderNumber}
         </span>
       </div>
       <div className="infoLine">
@@ -79,7 +79,7 @@ const CarBox = ({ car, carEnumOptions, reloadCars }) => {
           Fuel:
         </span>
         <span>
-          {carEnumOptions["fuelTypes"][car.driveType]}
+          {car.driveType}
         </span>
       </div>
       <div className="infoLine">

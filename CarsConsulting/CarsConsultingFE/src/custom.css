@@ -18,15 +18,69 @@ code {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-flow: column;
 }
 
 .TitleHomePage h2{
     margin-right:1rem;
 }
 
+.TitleCarFinderPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.TitleCarFinderPage h2 {
+    margin-right: 1rem;
+}
+
+.CarFinderSearch{
+    display:flex;
+    width:100%;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.CarFinderFields span{
+    width:20%;
+    margin-right:5%;
+}
+
+.CarFinderFields input {
+    width: 75%;
+}
+
+
+.searchButton {
+    box-shadow: 0px 0px 3px 0px #899599;
+    background-color: transparent;
+    border-radius: 21px;
+    border: 1px solid #d6bcd6;
+    display: inline-block;
+    cursor: pointer;
+    color: #3a8a9e;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 2px 2px 0px 2px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #e1e2ed;
+}
+
+.searchButton:hover {
+    background: linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+    background-color: #bab1ba;
+}
+
+.searchButton:active {
+    position: relative;
+    top: 1px;
+}
+
 .CarContainer {
     display: flex;
-    flex-flow: wrap;    
+    flex-flow: wrap;
     padding: 25px 0px 25px 0px;
     justify-content: center;
 }
@@ -59,4 +113,8 @@ code {
 
 .cardHeader svg{
     cursor:pointer;
+}
+
+.green{
+    color:green;
 }

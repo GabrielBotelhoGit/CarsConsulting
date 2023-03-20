@@ -1,48 +1,78 @@
 ﻿import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCar, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { confirmAlert } from 'react-confirm-alert';
 import { getByBrandAndYear } from '../services/CarApiHelperService';
-import { createCar } from '../services/CarsConsultingApiService';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Blocks } from 'react-loader-spinner'
+import CarFindingsBox from './CarFindingsBox';
 
-library.add(faCar, faXmark);
+library.add(faMagnifyingGlass);
 
 const CarFinder = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [carsData, setCarsData] = useState();
-  const [carsEnumOptions, setCarsEnumOptions] = useState();
+  const [maker, setMaker] = useState("");
+  const [year, setYears] = useState("");
+  const navigate = useNavigate();
 
-  const reloadCars = useCallback(() => {
+  function getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      console.log(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+  }
+
+  const updateMaker = (event) => {
+    setMaker(event.target.value);
+  };
+
+  const updateYear = (event) => {
+    setYears(event.target.value);
+  };
+
+  const reloadCars = useCallback((firstRun) => {
+    if (firstRun) {
+      setMaker("Hyundai");
+      setYears("2019");
+    }
     setLoadingData(true);
-    setTimeout(() => {
-      /*Promise.all([getAllCars(), getCarEnums()])
-        .then((results) => {
-          setCarsData(results[0].data);
-          setCarsEnumOptions(results[1].data);
-          setLoadingData(false);
-        })*/
-
-      getByBrandAndYear("Hyundai", 2019)
+    if (maker && year) {
+      getByBrandAndYear(maker, year)
         .then((resolve) => {
-          var teste = resolve.data;
+          setCarsData(resolve.data);
+          setLoadingData(false);
         });
+    }    
 
-    }, 2000)
-  }, []);
+  }, [maker, year]);
 
   useEffect(() => {
     if (!carsData) {
-      reloadCars();
+      reloadCars(true);
     }
   });
 
   return (
     <div>
-      <div className="TitleHomePage">
+      <div className="TitleCarFinderPage">
         <h2>Find a car</h2>
+        <div className="CarFinderSearch">
+          <div className="CarFinderFields">
+            <span>Maker</span>
+            <input type="text" value={maker} onChange={updateMaker} />
+          </div>
+          <div className="CarFinderFields">
+            <span>Year</span>
+            <input type="text" value={year} onChange={updateYear} />
+          </div>
+          <button type="button" className="searchButton" onClick={() => reloadCars(false)}><FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /></button>
+        </div>        
       </div>
       <div className="CarContainer">
         {loadingData ?
@@ -55,12 +85,11 @@ const CarFinder = () => {
             wrapperClass="blocks-wrapper"
           />
           : (
-            carsData.length > 0 && carsEnumOptions ?
-              /*carsData.map(car => {
-                return <CarBox car={car} key={car.id} carEnumOptions={carsEnumOptions} reloadCars={reloadCars} />
-              })*/
-              <p>teste</p>
-              : <p>You still dont have any cars saved</p>
+            carsData.length > 0 ?
+              carsData.map(car => {
+                return <CarFindingsBox car={car} key={car.id} navigate={navigate} />
+              })
+              : <p>Your search was unsuccessful</p>
           )
         }
       </div>

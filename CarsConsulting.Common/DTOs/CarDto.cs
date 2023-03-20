@@ -11,10 +11,12 @@ namespace CarsConsulting.DTOs
 
         public string? Maker { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public FuelType DriveType { get; set; }
 
         public CylinderNumber CylinderNumber { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TransmissionType TransmissionType { get; set; }
 
         [JsonConverter(typeof(JsonToByteArrayConverter))]
